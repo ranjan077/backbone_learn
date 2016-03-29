@@ -16,6 +16,10 @@ app.Views.appView = Backbone.View.extend({
         }]);
         var employeesView = new app.Views.Employees({collection: employeesCollection});
         $('#employeeTable').append(employeesView.render().el);
+        
+        $("#addEmployeeBtn").on('click', function(e) {
+            $('#addForm').html(new app.Views.EmployeeAddView().render().el);
+        })
     }
 })
 
@@ -55,6 +59,39 @@ app.Views.EmployeeEditView =  Backbone.View.extend({
     template: template('editEmployeeTemplate'),
     render: function() {
         this.$el.html(this.template( this.model.toJSON() ));
+        return this
+    }
+})
+
+// Employee add form view
+app.Views.EmployeeAddView =  Backbone.View.extend({
+    tagName: 'form',
+    template: template('addEmployeeTemplate'),
+    events: {
+        'click .clear': 'clearForm',
+        'click .add': 'addEmployee'
+    },
+    initialize: function() {
+       
+    },
+    clearForm: function(e) {
+         $('#add_fname').val('');
+         $('#add_lname').val('');
+         $('#add_email').val('');
+    },
+    addEmployee: function(e) {
+        e.preventDefault();
+        $('#add_fname').val();
+         $('#add_lname').val('');
+         $('#add_email').val('');
+        new app.Models.Employee({
+            firstName: $('#add_fname').val(),
+            lastName: $('#add_lname').val(),
+            email: $('#add_email').val()
+        })
+    },
+    render: function() {
+        this.$el.html(this.template());
         return this
     }
 })

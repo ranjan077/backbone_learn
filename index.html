@@ -11,7 +11,7 @@
         <div class="container">
             <h1>Employees Information</h1>
             <div class="addEmployee">
-                <input type="button" value="Add Employee" id="addEmployeeBtn" class="btn btn-primary"/>
+                <input type="button" value="Add Employee" id="addEmployeeBtn" class="btn btn-primary" data-toggle="modal" data-target="#addFormModal" />
             </div>
             <table id="employeeTable" class="table table-striped">
                 <thead>
@@ -30,6 +30,20 @@
                     <h4 class="modal-title">Edit Employee Information</h4>
                   </div>
                   <div class="modal-body" id="editForm">
+                    
+                  </div>
+              </div>
+            </div>
+        </div>
+        <div id="addFormModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Employee</h4>
+                  </div>
+                  <div class="modal-body" id="addForm">
                     
                   </div>
               </div>
@@ -60,6 +74,22 @@
               <input type="text" class="form-control" id="edit_email" placeholder="Enter Email" value="<%=email%>">
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
+        </script>
+        <script type="text/template" id="addEmployeeTemplate">
+            <div class="form-group">
+              <label for="add_fname">First Name:</label>
+              <input type="text" class="form-control" id="add_fname" placeholder="Enter First Name">
+            </div>
+            <div class="form-group">
+              <label for="add_lname">Last Name:</label>
+              <input type="text" class="form-control" id="add_lname" placeholder="Enter Last Name">
+            </div>
+            <div class="form-group">
+              <label for="add_email">Email:</label>
+              <input type="text" class="form-control" id="add_email" placeholder="Enter Email">
+            </div>
+            <input type="button" class="btn btn-default clear" value="Clear">
+            <button type="submit" class="add btn btn-default">Add</button>
         </script>
         
         <script src="js/jquery-1.12.2.js"></script>
