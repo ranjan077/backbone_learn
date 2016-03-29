@@ -18,7 +18,7 @@ app.Views.appView = Backbone.View.extend({
         $('#employeeTable').append(employeesView.render().el);
         
         $("#addEmployeeBtn").on('click', function(e) {
-            $('#addForm').html(new app.Views.EmployeeAddView().render().el);
+            $('#addForm').html(new app.Views.EmployeeAddView({collection: employeesCollection}).render().el);
         })
     }
 })
@@ -27,12 +27,26 @@ app.Views.appView = Backbone.View.extend({
 app.Views.Employee = Backbone.View.extend({
     tagName: 'tr',
     template: template('employeeTemplate'),
+    initialize: function() {
+      this.model.on('change', this.update, this);  
+      this.model.on('destroy', this.unRender, this);  
+    },
     events: {
-        'click #editEmployeeBtn': 'editEmployee'
+        'click #editEmployeeBtn': 'editEmployee',
+        'click #deleteEmployeeBtn': 'deleteEmployee'
     },
     editEmployee: function() {
       var empEditView = new app.Views.EmployeeEditView({model: this.model});
         $('#editForm').html(empEditView.render().el);
+    },
+    deleteEmployee: function() {
+        this.model.destroy();
+    },
+    update: function(employee) {
+        this.render();
+    },
+    unRender: function() {
+        this.remove();
     },
     render: function() {
         this.$el.html(this.template(this.model.toJSON()));
@@ -43,6 +57,9 @@ app.Views.Employee = Backbone.View.extend({
 //Employees view
 app.Views.Employees = Backbone.View.extend({
     tagName: 'tbody',
+    initialize: function() {
+        this.collection.on('add', this.addOne, this);
+     },
     render: function() {
         this.collection.each(this.addOne, this)
         return this
@@ -57,6 +74,17 @@ app.Views.Employees = Backbone.View.extend({
 app.Views.EmployeeEditView =  Backbone.View.extend({
     tagName: 'form',
     template: template('editEmployeeTemplate'),
+    events: {
+        'click .Update': 'updateEmployee'
+    },
+    updateEmployee: function(e) {
+        e.preventDefault();
+       
+        this.model.set('firstName', $('#edit_fname').val());
+        this.model.set('lastName', $('#edit_lname').val());
+        this.model.set('email', $('#edit_email').val());
+        $('#editFormModal').modal('toggle');
+    },
     render: function() {
         this.$el.html(this.template( this.model.toJSON() ));
         return this
@@ -81,18 +109,17 @@ app.Views.EmployeeAddView =  Backbone.View.extend({
     },
     addEmployee: function(e) {
         e.preventDefault();
-        $('#add_fname').val();
-         $('#add_lname').val('');
-         $('#add_email').val('');
-        new app.Models.Employee({
+        $('#addFormModal').modal('toggle');
+        var newEmployee = new app.Models.Employee({
             firstName: $('#add_fname').val(),
             lastName: $('#add_lname').val(),
             email: $('#add_email').val()
-        })
+        });
+        this.collection.add(newEmployee);
     },
     render: function() {
         this.$el.html(this.template());
-        return this
+        return this;
     }
 })
 new app.Views.appView();
