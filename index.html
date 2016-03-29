@@ -11,9 +11,9 @@
         <div class="container">
             <h1>Employees Information</h1>
             <div class="addEmployee">
-                
+                <input type="button" value="Add Employee" id="addEmployeeBtn" class="btn btn-primary"/>
             </div>
-            <table id="employeeTable">
+            <table id="employeeTable" class="table table-striped">
                 <thead>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -21,15 +21,49 @@
                 </thead>
             </table>
         </div>
+        <div id="editFormModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Edit Employee Information</h4>
+                  </div>
+                  <div class="modal-body" id="editForm">
+                    
+                  </div>
+              </div>
+            </div>
+        </div>
         <script type="text/template" id="employeeTemplate">
-           
-            <td><%= firstName></td>
-            <td><%= lastName></td>
-            <td><%= email></td>
-            
+            <td><%= firstName %></td>
+            <td><%= lastName %></td>
+            <td>
+                <%= email %>
+            </td>
+            <td>
+                <input type="button" value="Edit" id="editEmployeeBtn" class="btn btn-primary" data-toggle="modal" data-target="#editFormModal"/>
+                <input type="button" value="Delete" id="deleteEmployeeBtn" class="btn btn-primary"/>
+            </td>
+        </script>
+        <script type="text/template" id="editEmployeeTemplate">
+            <div class="form-group">
+              <label for="edit_fname">First Name:</label>
+              <input type="text" class="form-control" id="edit_fname" placeholder="Enter First Name" value="<%=firstName%>">
+            </div>
+            <div class="form-group">
+              <label for="edit_lname">Last Name:</label>
+              <input type="text" class="form-control" id="edit_lname" placeholder="Enter Last Name" value="<%=lastName%>">
+            </div>
+            <div class="form-group">
+              <label for="edit_email">Email:</label>
+              <input type="text" class="form-control" id="edit_email" placeholder="Enter Email" value="<%=email%>">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
         </script>
         
         <script src="js/jquery-1.12.2.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="js/underscore.js"></script>
         <script src="js/backbone.js"></script>
         <script src="js/main.js"></script>
@@ -37,24 +71,5 @@
         <script src="js/collection.js"></script>
         <script src="js/views.js"></script>
         <script src="js/router.js"></script>
-        <script>
-            var employeesCollection = new app.Collections.Employees([{
-                firstName: 'Rocky',
-                lastName: 'Balboa',
-                email: 'rocky@example.com'
-            },{
-                firstName: 'John',
-                lastName: 'Rambo',
-                email: 'john@example.com'
-            },{
-                firstName: 'David',
-                lastName: 'Ran',
-                email: 'david@example.com'
-            }]);
-            
-            var employeesView = new app.Views.Employees({collection: employeesCollection});
-            
-            $('#employeeTable').append(employeesView.render().el);
-        </script>
     </body>
 </html>
