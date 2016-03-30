@@ -143,7 +143,6 @@ app.Views.EmployeeAddView =  Backbone.View.extend({
             self.template = _.template(template);
             self.$el.html(self.template());
         })
-        
         return this;
     }
 })
