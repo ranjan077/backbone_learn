@@ -19,7 +19,16 @@ app.Views.appView = Backbone.View.extend({
         
         $("#addEmployeeBtn").on('click', function(e) {
             $('#addForm').html(new app.Views.EmployeeAddView({collection: employeesCollection}).render().el);
-        })
+        });
+        $('#search').keyup(_.debounce(function(e) {
+           var result = employeesCollection.filter(function(model) { 
+               var pattern = new RegExp( $(e.target).val(),"gi");
+               return pattern.test(model.get("firstName"));
+           });
+            console.log(result);
+            $('#employeeTable').html('');;
+            $('#employeeTable').append(employeesView.render(result).el);
+        }, 300));
     }
 })
 
@@ -60,8 +69,14 @@ app.Views.Employees = Backbone.View.extend({
     initialize: function() {
         this.collection.on('add', this.addOne, this);
      },
-    render: function() {
-        this.collection.each(this.addOne, this)
+    render: function(filteredCollection) {
+        this.$el.html('')
+        if(!filteredCollection){
+            this.collection.each(this.addOne, this)
+        }
+        else {
+            filteredCollection.forEach(this.addOne, this)
+        }
         return this
     },
     addOne: function(employee) {
