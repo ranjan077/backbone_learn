@@ -26,7 +26,7 @@ app.Views.appView = Backbone.View.extend({
                return pattern.test(model.get("firstName"));
            });
             console.log(result);
-            $('#employeeTable').html('');;
+           // $('#employeeTable').html('');;
             $('#employeeTable').append(employeesView.render(result).el);
         }, 300));
     }
