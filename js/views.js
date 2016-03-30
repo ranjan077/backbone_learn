@@ -35,7 +35,6 @@ app.Views.appView = Backbone.View.extend({
 //Employee view
 app.Views.Employee = Backbone.View.extend({
     tagName: 'tr',
-    template: template('employeeTemplate'),
     initialize: function() {
       this.model.on('change', this.update, this);  
       this.model.on('destroy', this.unRender, this);  
@@ -58,7 +57,11 @@ app.Views.Employee = Backbone.View.extend({
         this.remove();
     },
     render: function() {
-        this.$el.html(this.template(this.model.toJSON()));
+        var self = this;
+        $.get('../templates/employee.html', function(template) {
+            self.template = _.template(template);
+            self.$el.html(self.template(self.model.toJSON()));
+        })
         return this;
     }
 })
@@ -88,7 +91,6 @@ app.Views.Employees = Backbone.View.extend({
 //Employee edit form view
 app.Views.EmployeeEditView =  Backbone.View.extend({
     tagName: 'form',
-    template: template('editEmployeeTemplate'),
     events: {
         'click .Update': 'updateEmployee'
     },
@@ -101,7 +103,11 @@ app.Views.EmployeeEditView =  Backbone.View.extend({
         $('#editFormModal').modal('toggle');
     },
     render: function() {
-        this.$el.html(this.template( this.model.toJSON() ));
+         var self = this;
+         $.get('../templates/editEmployee.html', function(template) {
+            self.template = _.template(template);
+            self.$el.html(self.template(self.model.toJSON()));
+        })
         return this
     }
 })
@@ -109,7 +115,6 @@ app.Views.EmployeeEditView =  Backbone.View.extend({
 // Employee add form view
 app.Views.EmployeeAddView =  Backbone.View.extend({
     tagName: 'form',
-    template: template('addEmployeeTemplate'),
     events: {
         'click .clear': 'clearForm',
         'click .add': 'addEmployee'
@@ -133,7 +138,12 @@ app.Views.EmployeeAddView =  Backbone.View.extend({
         this.collection.add(newEmployee);
     },
     render: function() {
-        this.$el.html(this.template());
+        var self = this;
+        $.get('../templates/addEmployee.html', function(template) {
+            self.template = _.template(template);
+            self.$el.html(self.template());
+        })
+        
         return this;
     }
 })

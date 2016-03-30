@@ -51,49 +51,6 @@
               </div>
             </div>
         </div>
-        <script type="text/template" id="employeeTemplate">
-            <td><%= firstName %></td>
-            <td><%= lastName %></td>
-            <td>
-                <%= email %>
-            </td>
-            <td>
-                <input type="button" value="Edit" id="editEmployeeBtn" class="btn btn-primary" data-toggle="modal" data-target="#editFormModal"/>
-                <input type="button" value="Delete" id="deleteEmployeeBtn" class="btn btn-primary"/>
-            </td>
-        </script>
-        <script type="text/template" id="editEmployeeTemplate">
-            <div class="form-group">
-              <label for="edit_fname">First Name:</label>
-              <input type="text" class="form-control" id="edit_fname" placeholder="Enter First Name" value="<%=firstName%>">
-            </div>
-            <div class="form-group">
-              <label for="edit_lname">Last Name:</label>
-              <input type="text" class="form-control" id="edit_lname" placeholder="Enter Last Name" value="<%=lastName%>">
-            </div>
-            <div class="form-group">
-              <label for="edit_email">Email:</label>
-              <input type="text" class="form-control" id="edit_email" placeholder="Enter Email" value="<%=email%>">
-            </div>
-            <button type="submit" class="btn btn-default Update">Update</button>
-        </script>
-        <script type="text/template" id="addEmployeeTemplate">
-            <div class="form-group">
-              <label for="add_fname">First Name:</label>
-              <input type="text" class="form-control" id="add_fname" placeholder="Enter First Name">
-            </div>
-            <div class="form-group">
-              <label for="add_lname">Last Name:</label>
-              <input type="text" class="form-control" id="add_lname" placeholder="Enter Last Name">
-            </div>
-            <div class="form-group">
-              <label for="add_email">Email:</label>
-              <input type="text" class="form-control" id="add_email" placeholder="Enter Email">
-            </div>
-            <input type="button" class="btn btn-default clear" value="Clear">
-            <button type="submit" class="add btn btn-default">Add</button>
-        </script>
-        
         <script src="js/jquery-1.12.2.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="js/underscore.js"></script>
