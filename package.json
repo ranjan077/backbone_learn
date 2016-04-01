@@ -1,0 +1,23 @@
+{
+  "name": "backbone_learn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranjan077/backbone_learn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ranjan077/backbone_learn/issues"
+  },
+  "homepage": "https://github.com/ranjan077/backbone_learn#readme",
+  "dependencies": {
+    "install": "^0.6.1",
+    "inuit-starter-kit": "^0.2.9"
+  }
+}

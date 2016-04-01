@@ -29,6 +29,8 @@ app.Views.appView = Backbone.View.extend({
            // $('#employeeTable').html('');;
             $('#employeeTable').append(employeesView.render(result).el);
         }, 300));
+        
+        new app.Views.EmployeeFilterView ({collection: employeesCollection});
     }
 })
 
@@ -71,6 +73,7 @@ app.Views.Employees = Backbone.View.extend({
     tagName: 'tbody',
     initialize: function() {
         this.collection.on('add', this.addOne, this);
+        this.collection.on('sort', this.sort, this);
      },
     render: function(filteredCollection) {
         this.$el.html('')
@@ -85,7 +88,11 @@ app.Views.Employees = Backbone.View.extend({
     addOne: function(employee) {
         var employeeView = new app.Views.Employee({model:employee});
         this.$el.append(employeeView.render().el);
+    },
+    sort: function(e) {
+        $('#employeeTable').append(this.render(this.collection.sort({silent: true})).el);
     }
+    
 })
 
 //Employee edit form view
@@ -144,6 +151,31 @@ app.Views.EmployeeAddView =  Backbone.View.extend({
             self.$el.html(self.template());
         })
         return this;
+    }
+})
+
+app.Views.EmployeeFilterView = Backbone.View.extend({
+    el: '#employeeTableHead',
+    events: {
+        'click': 'sort'
+    },
+    sort: function(e) {
+       
+        if(this.collection.sort_dir == 'aesc')
+            {
+                this.collection.sort_dir = 'desc';
+            }
+        else {
+            this.collection.sort_dir = 'aesc';
+        }
+        
+        if(e.target.className == 'firstName') {
+            this.collection.sortBy = 'firstName';
+        }
+        else if(e.target.className == 'lastName') {
+            this.collection.sortBy = 'lastName';
+        }
+        this.collection.trigger('sort');
     }
 })
 new app.Views.appView();
